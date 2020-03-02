@@ -16,7 +16,7 @@
         },
         "resourceTags": {
             "value": {
-                "Environment": "Stage",
+                "Environment": "Production",
                 "Project": "GUM"
             }          
         }   
