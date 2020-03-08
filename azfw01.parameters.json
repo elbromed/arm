@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetName": {
+            "value": ""
+        },
+        "vnetAddressSpace": {
+            "value": ""
+        },
+        "subnetAddressSpace": {
+            "value": ""
+        },
+        "subnetId": {
+            "value": "/subscriptions/d4b4d042-2968-4210-b2db-9666928904db/resourceGroups/RG-HUB/providers/Microsoft.Network/virtualNetworks/HUB-VNet/subnets/AzureFirewallSubnet"
+        },
+        "managementSubnetId": {
+            "value": "/subscriptions/d4b4d042-2968-4210-b2db-9666928904db/resourceGroups/RG-HUB/providers/Microsoft.Network/virtualNetworks/HUB-VNet/subnets/AzureFirewallManagementSubnet"
+        },
+        "zones": {
+            "value": []
+        },
+        "publicIpZones": {
+            "value": []
+        }
+    }
+}  

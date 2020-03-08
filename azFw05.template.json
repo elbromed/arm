@@ -1,0 +1,76 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "VMCorp001_OsDisk_1": {
+            "defaultValue": "/subscriptions/d4b4d042-2968-4210-b2db-9666928904db/resourceGroups/RG-HUB/providers/Microsoft.Compute/disks/VMCorp001_OsDisk_1",
+            "type": "String"
+        },
+        "networkInterfaces_vmcorp001": {
+            "defaultValue": "/subscriptions/d4b4d042-2968-4210-b2db-9666928904db/resourceGroups/RG-HUB/providers/Microsoft.Network/networkInterfaces/vmcorp001priv_ip541",
+            "type": "String"
+        }
+    },
+    "variables": {
+        "virtualMachines_VMCorp001_name":"VMCorp001",
+        "location": "canadacentral"
+                
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-07-01",
+            "name": "[variables('virtualMachines_VMCorp001_name')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_DS1_v2"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2016-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Windows",
+                        "name": "[concat(variables('virtualMachines_VMCorp001_name'), '_OsDisk_1')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS",
+                            "id": "[parameters('VMCorp001_OsDisk_1')]"
+                        },
+                        "diskSizeGB": 127
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[variables('virtualMachines_VMCorp001_name')]",
+                    "adminUsername": "azureuser",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true,
+                    "requireGuestProvisionSignal": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[parameters('networkInterfaces_vmcorp001')]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "https://rghubdiag810.blob.core.windows.net/"
+                    }
+                }
+            }
+        }
+    ]
+}
